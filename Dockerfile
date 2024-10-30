@@ -4,14 +4,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 # Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy the .csproj file
-COPY devsanx/devsanx.csproj ./devsanx/
+# Copy the entire project
+COPY . ./
 
 # Restore its dependencies
 RUN dotnet restore
-
-# Copy the entire project
-COPY . ./
 
 # Build the project
 RUN dotnet publish ./devsanx/devsanx.csproj -c Release -o out
