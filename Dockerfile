@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy the .csproj file
-COPY devsanx.csproj ./
+COPY devsanx/devsanx.csproj ./devsanx/
 
 # Restore its dependencies
 RUN dotnet restore
@@ -14,7 +14,7 @@ RUN dotnet restore
 COPY . ./
 
 # Build the project
-RUN dotnet publish -c Release -o out
+RUN dotnet publish ./devsanx/devsanx.csproj -c Release -o out
 
 # Use the ASP.NET Core runtime image to run the application
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
