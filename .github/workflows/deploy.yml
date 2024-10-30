@@ -19,11 +19,11 @@ jobs:
           docker stop devsanx-blazor || true
           docker rm devsanx-blazor || true
           
-      # Use the Raspberry Pi port 16002 to listen from the container port 80
+      # Use the Raspberry Pi port 16002 to listen from the container port 8080
       # The port 16002 is used by cloudflare tunnel to display website
       - name: Run new Docker container
         run: |
           docker run -d --name devsanx-blazor \
             --restart unless-stopped \
-            -p 16002:80 \
+            -p 16002:8080 \
             devsanx-blazor-image:latest
