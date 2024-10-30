@@ -1,0 +1,26 @@
+name: Deploy website to Raspberry Pi 5 with Docker
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t devsanx-blazor-image:latest .
+
+      - name: Stop old Docker container
+        run: |
+          docker stop devsanx-blazor || true
+          docker rm devsanx-blazor || true
+
+      - name: Run new Docker container
+        run: |
+          docker run -d --name devsanx-blazor \
+            --restart unless-stopped \
+            devsanx-blazor-image:latest
