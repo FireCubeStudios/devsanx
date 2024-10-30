@@ -2,6 +2,9 @@ name: Deploy website to Raspberry Pi 5 with Docker
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   deploy:
