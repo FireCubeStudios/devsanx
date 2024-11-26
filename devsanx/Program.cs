@@ -23,9 +23,20 @@ namespace devsanx
 			// Migrations are generated with dotnet-ef tool at the project folder (dotnet-ef needs to match project .NET version)
 			// Run "dotnet ef migrations add InitialProjectsDBSchema" 
 			// This creates a "Migrations" folder
+			// To execute the migration run "dotnet ef database update"
 			string? SQLiteConnection = builder.Configuration.GetConnectionString("SQLiteProjectsDatabaseConnection");
 			builder.Services.AddDbContext<ProjectsDBContext>(options => options.UseSqlite(SQLiteConnection));
 
+			// Execute the migration in code:
+			/*using (var scope = app.Services.CreateScope()) // Create a disposable service scope
+			{
+				// From the scope, get an instance of our database context.
+				// Through the `using` keyword, we make sure to dispose it after we are done.
+				using var context = scope.ServiceProvider.GetService<ProjectsDBContext>();
+
+				// Execute the migration from code.
+				context.Database.Migrate();
+			}*/
 			#endregion
 
 
