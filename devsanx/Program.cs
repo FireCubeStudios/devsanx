@@ -1,4 +1,5 @@
 using devsanx.Database;
+using devsanx.Database.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,7 @@ namespace devsanx
 			#region EFCore database
 
 			// Register the database context in the application builder
+			// Then we can access it via dependency injection
 			// Loaded from configuration in appsettings.json
 			// Migrations are generated with dotnet-ef tool at the project folder (dotnet-ef needs to match project .NET version)
 			// Run "dotnet ef migrations add InitialProjectsDBSchema" 
@@ -37,6 +39,11 @@ namespace devsanx
 				// Execute the migration from code.
 				context.Database.Migrate();
 			}*/
+
+
+			// Repository pattern, classes to ecnapsulate the logic of accessing our data
+			// Dependency injection will pass our ProjectsDBContext to the repository classes
+			builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 			#endregion
 
 

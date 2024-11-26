@@ -10,7 +10,7 @@ namespace devsanx.Database
 	 */
 	public class ProjectsDBContext : DbContext
 	{
-		public DbSet<User> Users { get; set; }
+		public DbSet<Developer> Developers { get; set; }
 		public DbSet<Project> Projects { get; set; }
 
 		public ProjectsDBContext(DbContextOptions<ProjectsDBContext> options) : base(options) { }

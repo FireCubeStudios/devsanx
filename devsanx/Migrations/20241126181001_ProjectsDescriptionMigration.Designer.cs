@@ -10,8 +10,8 @@ using devsanx.Database;
 namespace devsanx.Migrations
 {
     [DbContext(typeof(ProjectsDBContext))]
-    [Migration("20241126145658_InitialProjectsDBSchema")]
-    partial class InitialProjectsDBSchema
+    [Migration("20241126181001_ProjectsDescriptionMigration")]
+    partial class ProjectsDescriptionMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,29 +19,9 @@ namespace devsanx.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
-            modelBuilder.Entity("devsanx.Database.Domain.Project", b =>
+            modelBuilder.Entity("devsanx.Database.Domain.Developer", b =>
                 {
-                    b.Property<int>("ProjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("devsanx.Database.Domain.User", b =>
-                {
-                    b.Property<int>("UserId")
+                    b.Property<int>("DeveloperId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -49,23 +29,43 @@ namespace devsanx.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId");
+                    b.HasKey("DeveloperId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Developers");
                 });
 
             modelBuilder.Entity("devsanx.Database.Domain.Project", b =>
                 {
-                    b.HasOne("devsanx.Database.Domain.User", "User")
+                    b.Property<int>("ProjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DeveloperId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProjectId");
+
+                    b.HasIndex("DeveloperId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("devsanx.Database.Domain.Project", b =>
+                {
+                    b.HasOne("devsanx.Database.Domain.Developer", "Developer")
                         .WithMany("Projects")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("DeveloperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Developer");
                 });
 
-            modelBuilder.Entity("devsanx.Database.Domain.User", b =>
+            modelBuilder.Entity("devsanx.Database.Domain.Developer", b =>
                 {
                     b.Navigation("Projects");
                 });

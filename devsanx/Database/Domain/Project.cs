@@ -2,9 +2,10 @@
 {
 	public class Project
 	{
-		public int UserId { get; set; }
+		public int DeveloperId { get; set; }
 		public int ProjectId { get; set; } // Attributes with "Id" will be translated to keys by EFCore
-		public string Text { get; set; }
-		public User User { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
+		public Developer Developer { get; set; }
 	}
 }
