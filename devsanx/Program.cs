@@ -1,3 +1,7 @@
+using devsanx.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace devsanx
 {
 	public class Program
@@ -8,6 +12,24 @@ namespace devsanx
 
 			// Add services to the container.
 			builder.Services.AddRazorPages();
+
+
+
+
+			#region EFCore database
+
+			// Register the database context in the application builder
+			// Loaded from configuration in appsettings.json
+			// Migrations are generated with dotnet-ef tool at the project folder (dotnet-ef needs to match project .NET version)
+			// Run "dotnet ef migrations add InitialProjectsDBSchema" 
+			// This creates a "Migrations" folder
+			string? SQLiteConnection = builder.Configuration.GetConnectionString("SQLiteProjectsDatabaseConnection");
+			builder.Services.AddDbContext<ProjectsDBContext>(options => options.UseSqlite(SQLiteConnection));
+
+			#endregion
+
+
+
 
 			var app = builder.Build();
 
